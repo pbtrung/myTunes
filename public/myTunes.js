@@ -87,7 +87,7 @@ $(function() {
             });
             showHideDl();
             var options = {
-                valueNames: ["searchSrc1", "searchSrc1"],
+                valueNames: ["searchSrc1", "searchSrc2"],
                 page: 5,
                 pagination: true
             };
