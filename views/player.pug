@@ -34,7 +34,8 @@ html
                             dd {{this.bitrate}} kbps
                             dt File
                             dd 
-                                a#download(href="{{this.path}}") download
+                                a#download(href="/downloadItem?id={{this.path}}", data-path="{{this.path}}") download
+                                a#downloadHidden.hidden
                             | {{#if this.mb_trackid}}
                             dt MusicBrainz entry
                             dd 

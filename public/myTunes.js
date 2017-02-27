@@ -49,11 +49,26 @@ $(function() {
         events: {
             "submit #queryForm": "routeResults",
             "click #pause": "pauseTrack",
+            "click #download": "downloadTrack",
             "click #play": "playTrack"
         },
 
         pauseTrack: function(ev) {
             $("#player").get(0).pause();
+        },
+
+        downloadTrack: function(ev) {
+            ev.preventDefault();
+            var downloadLnk = $(ev.currentTarget);
+            var downloadHidden = downloadLnk.parent().find("#downloadHidden");
+            var fileId = downloadLnk.data("path");
+            var queryUrl = "/itemUrl?id=" + encodeURIComponent(fileId);
+
+            $.getJSON(queryUrl, function(itemUrl) {
+                downloadHidden.attr("href", itemUrl);
+                downloadHidden.attr("download", itemUrl);
+                downloadHidden.get(0).click();
+            });
         },
 
         playTrack: function(ev) {
@@ -92,7 +107,7 @@ $(function() {
                 pagination: true
             };
 
-            var userList = new List("content", options);
+            var resultList = new List("content", options);
         }
     });
 
@@ -102,7 +117,8 @@ $(function() {
 function showHideDl() {
     $("ul li").click(function(e) {
         var target = $(e.target);
-        if(!target.is("#play") && !target.is("#pause") && !target.is("#download")) {
+        if(!target.is("#play") && !target.is("#pause") &&
+           !target.is("#download") && !target.is("#downloadHidden")) {
             if($(this).find("dl").hasClass("hidden")) {
                 $("ul li dl").addClass("hidden");
                 $(this).find("dl").removeClass("hidden");

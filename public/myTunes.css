@@ -33,26 +33,30 @@
     width: 60px;
 }
 
+dl {
+    margin-bottom: 0;
+}
+
 @media screen and (min-width: 300px) and (max-width: 400px) {
-    #player, #query {
-        width: 290px;
+    #player, #query, #content {
+        width: 95vw;
     }
 }
 
-@media screen and (min-width: 400px) and (max-width: 500px) {
-    #player, #query {
-        width: 350px;
+@media screen and (min-width: 350px) and (max-width: 500px) {
+    #player, #query, #content {
+        width: 95vw;
     }
 }
 
 @media screen and (min-width: 500px) and (max-width: 800px) {
-    #player, #query {
-        width: 450px;
+    #player, #query, #content {
+        width: 95vw;
     }
 }
 
 @media screen and (min-width: 800px) {
-    #player, #query {
-        width: 600px;
+    #player, #query, #content {
+        width: 700px;
     }
 }
