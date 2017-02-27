@@ -1,0 +1,30 @@
+{
+  "name": "mytunes",
+  "version": "0.0.999999",
+  "description": "Music streaming web application based on Beets and Google Drive",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "6.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pbtrung/myTunes.git"
+  },
+  "author": "Trung Pham <me@trungbpham.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/pbtrung/myTunes/issues"
+  },
+  "homepage": "https://github.com/pbtrung/myTunes#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "express-session": "^1.15.1",
+    "googleapis": "^17.1.0",
+    "pug": "^2.0.0-beta11",
+    "request": "^2.79.0",
+    "sqlite3": "^3.1.8"
+  }
+}
