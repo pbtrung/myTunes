@@ -2,19 +2,21 @@ var sqlite3 = require("sqlite3").verbose();
 var config = require("../data/config.json");
 var auth = require("./auth.js");
 var request = require("request");
+var fs = require("fs");
 
-var db;
+var db, fileName;
 if(process.argv.length == 2) {
     db = new sqlite3.Database(config["server_db_path"], sqlite3.OPEN_READONLY);
+    fileName = "./data/tokens.json";
 } else if(process.argv.length == 3 && process.argv[2] === "local") {
     db = new sqlite3.Database(config["local_db_path"], sqlite3.OPEN_READONLY);
+    fileName = "./data/tokens_test.json";
 }
 
 module.exports = {
     loginRoutes: function(app) {
         app.get("/", function(req, res) {
-            var session = req.session;
-            if(session["tokens"] !== undefined) {
+            if(fs.existsSync(fileName)) {
                 res.render("player");
             } else {
                 var url = auth.getAuthUrl();
@@ -25,15 +27,16 @@ module.exports = {
         app.get("/auth/google-drive/callback", function(req, res) {
 
             var oauth2Client = auth.getOAuthClient();
-            var session = req.session;
             var code = req.query.code;
-            oauth2Client.getToken(code, function(err, tokens) {
+            oauth2Client.getToken(code, function(err, ton) {
                 if(!err) {
-                    oauth2Client.setCredentials(tokens);
-                    session["tokens"] = tokens;
+                    fs.writeFile(fileName, JSON.stringify(ton), function(err) {
+                        if(err) return console.log(err);
+                        console.log(JSON.stringify(ton));
+                        setInterval(auth.periodicCheckAuth, 600000);
+                    });
                     res.redirect("/");                    
                 } else {
-                    session["tokens"] = undefined;
                     res.redirect("/");
                 }
             });
@@ -70,8 +73,14 @@ module.exports = {
 
         app.get("/itemUrl", function(req, res) {
 
-            var session = req.session;
-            var accessToken = session["tokens"]["access_token"];
+            var tokens;
+            if(process.argv.length == 2) {
+                tokens = require("../data/tokens.json");
+            } else if(process.argv.length == 3 && process.argv[2] === "local") {
+                tokens = require("../data/tokens_test.json");
+            }
+
+            var accessToken = tokens["access_token"];
             var bearer = "Bearer " + accessToken;
             var options = {
                 url: "https://www.googleapis.com/drive/v2/files/" + req.query.id,
