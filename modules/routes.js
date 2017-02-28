@@ -33,7 +33,6 @@ module.exports = {
                     fs.writeFile(fileName, JSON.stringify(ton), function(err) {
                         if(err) return console.log(err);
                         console.log(JSON.stringify(ton));
-                        setInterval(auth.periodicCheckAuth, 600000);
                     });
                     res.redirect("/");                    
                 } else {

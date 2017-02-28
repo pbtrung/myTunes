@@ -13,6 +13,9 @@ var routes = require("./modules/routes");
 routes.loginRoutes(app);
 routes.dataRoutes(app);
 
+var auth = require("./modules/auth.js");
+setInterval(auth.periodicCheckAuth, 900000);
+
 http.createServer(app).listen(app.get("port"), function() {
     console.log("Express server listening on port " + app.get("port"));
 });
