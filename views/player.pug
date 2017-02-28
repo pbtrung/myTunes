@@ -11,19 +11,23 @@ html
                 .searchForm(align="center")
                     form#queryForm
                         input#query.form-control.search(placeholder="Search", type="search")
+                        marquee#playingItem(behavior="scroll", direction="left", scrolldelay="140") Welcome to myTunes!
+                ul#results.list-group.list
                 .text-center
                     ul.pagination.pagination-sm
-                ul#results.list-group.list
             #templates
                 script#result-template(type="text/x-handlebars-template")
                     li.list-group-item.item-details
-                        p#track-title.searchSrc1 {{this.title}}
+                        p#track-title.searchSrc1
+                            | {{this.title}} 
+                            | &nbsp;&nbsp;
+                            span.badge 
+                                a.controlPlay(id="play-{{this.path}}", href="#", data-path="{{this.path}}", data-title="{{this.title}}", data-artist="{{this.albumartist}}") Play
+                            | &nbsp;&nbsp;
+                            span.badge
+                                a.controlPause(id="pause-{{this.path}}", href="#") Pause
                         p#track-details.searchSrc2 {{this.albumartist}} -- {{this.album}}
                         dl.dl-horizontal.hidden
-                            dd
-                                .btn-group.btn-group-sm(role="group")
-                                    button#play.btn.btn-default(type="button", data-path="{{this.path}}") Play
-                                    button#pause.btn.btn-default(type="button") Pause
                             dt Track
                             dd {{this.track}}/{{this.tracktotal}}
                             dt Format

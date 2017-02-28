@@ -4,12 +4,17 @@
 }
 
 .pagination {
-    margin: 7px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#playingItem {
+    color: blue;
 }
 
 #queryForm {
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 #track-details {
@@ -17,9 +22,25 @@
     margin-bottom: 5px;
 }
 
+#playingItem {
+    font-size: 12px;
+    margin-top: 2px;
+}
+
 #track-title {
     margin-bottom: 0;
 }
+
+.badge { 
+    vertical-align: middle; 
+    position: relative;
+    top: -1px;
+}
+
+.badge a { 
+    color: white; 
+    display: inline;
+} 
 
 .hidden {
     display: none;
@@ -29,8 +50,8 @@
     white-space: pre-wrap;
 }
 
-#play, #pause {
-    width: 60px;
+.list-group {
+    margin-bottom: 5px;
 }
 
 dl {

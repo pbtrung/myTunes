@@ -48,13 +48,15 @@ $(function() {
         el: $("body"),
         events: {
             "submit #queryForm": "routeResults",
-            "click #pause": "pauseTrack",
+            "click .controlPause": "pauseTrack",
             "click #download": "downloadTrack",
-            "click #play": "playTrack"
+            "click .controlPlay": "playTrack"
         },
 
         pauseTrack: function(ev) {
+            ev.preventDefault();
             $("#player").get(0).pause();
+            $("#playingItem").text("Track has been paused!");
         },
 
         downloadTrack: function(ev) {
@@ -72,17 +74,21 @@ $(function() {
         },
 
         playTrack: function(ev) {
-            var playBtn = $(ev.currentTarget);
-            var fileId = playBtn.data("path");
+            ev.preventDefault();
+            var playLnk = $(ev.currentTarget);
+            var fileId = playLnk.data("path");
             var player = document.getElementById("player");
             var queryUrl = "/itemUrl?id=" + encodeURIComponent(fileId);
+            var playingItem = playLnk.data("title") + " -- " + playLnk.data("artist");
 
             $.getJSON(queryUrl, function(itemUrl) {
                 if (player.src !== itemUrl) {
                     $("#player").attr("src", itemUrl);
                     $("#player").get(0).play();
+                    $("#playingItem").text(playingItem);
                 } else {
                     $("#player").get(0).play();
+                    $("#playingItem").text(playingItem);
                 }
             });
         },
@@ -117,7 +123,7 @@ $(function() {
 function showHideDl() {
     $("ul li").click(function(e) {
         var target = $(e.target);
-        if(!target.is("#play") && !target.is("#pause") &&
+        if(!target.is(".controlPlay") && !target.is(".controlPause") && 
            !target.is("#download") && !target.is("#downloadHidden")) {
             if($(this).find("dl").hasClass("hidden")) {
                 $("ul li dl").addClass("hidden");
