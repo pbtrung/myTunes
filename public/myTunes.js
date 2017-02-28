@@ -81,14 +81,20 @@ $(function() {
             var queryUrl = "/itemUrl?id=" + encodeURIComponent(fileId);
             var playingItem = playLnk.data("title") + " -- " + playLnk.data("artist");
 
-            $.getJSON(queryUrl, function(itemUrl) {
-                if (player.src !== itemUrl) {
-                    $("#player").attr("src", itemUrl);
-                    $("#player").get(0).play();
-                    $("#playingItem").text(playingItem);
-                } else {
-                    $("#player").get(0).play();
-                    $("#playingItem").text(playingItem);
+            $.ajax({
+                type: "GET",
+                url: queryUrl,
+                dataType: "json",
+                async: true,
+                success: function(itemUrl) {
+                    if (player.src !== itemUrl) {
+                        $("#player").attr("src", itemUrl);
+                        $("#player").get(0).play();
+                        $("#playingItem").text(playingItem);
+                    } else {
+                        $("#player").get(0).play();
+                        $("#playingItem").text(playingItem);
+                    }
                 }
             });
         },

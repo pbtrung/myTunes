@@ -76,7 +76,7 @@ module.exports = {
                         expires_in: info.expires_in
                     };
                     fs.writeFile(fileName, JSON.stringify(newTokens), function(err) {
-                        if (err) return console.log(err);
+                        if(err) return console.log(err);
                         console.log(JSON.stringify(newTokens));
                     });
                 }
