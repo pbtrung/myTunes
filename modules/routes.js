@@ -59,8 +59,9 @@ module.exports = {
 
         app.get("/search/query/:query", function(req, res) {
 
-            var stmt = "SELECT * FROM items WHERE title LIKE ? OR albumartist LIKE ?" 
-                     + " OR album LIKE ? ORDER BY title COLLATE NOCASE ASC";
+            var stmt = "SELECT id, album, albumartist, title, path, track, tracktotal, format, length, bitrate, mb_trackid, lyrics"
+                     + " FROM items WHERE title LIKE ? OR albumartist LIKE ?" 
+                     + " OR album LIKE ? ORDER BY title COLLATE NOCASE ASC LIMIT 1000";
             var searchTerm = "%" + req.params.query + "%";
             db.all(stmt, [searchTerm, searchTerm, searchTerm], function(err, items) {
                 for (var i = 0; i < items.length; i++) {
